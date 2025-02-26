@@ -1,0 +1,13 @@
+##create an ecr registry
+ aws ecr create-repository --repository-name aws-ecr-gopal --region us-east-1
+####lets install docker
+https://docs.docker.com/engine/install/ubuntu/
+
+#####deploy the container with custom image
+ 510  git pull
+ vi ecr-deploy.yml
+ ###get the image uri from ecr registry
+  511  kubectl apply -f ecr-deploy.yml
+  512  kubectl get deploy
+  513  kubectl describe deploy ecr-deploy
+

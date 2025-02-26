@@ -1,0 +1,6 @@
+ ###we will create a pod and expose the pod using nodeport
+ 441  kubectl run my-first-pod --image nginx
+  442  kubectl get pod
+  443  kubectl expose pod my-first-pod --type=NodePort --port=80 --name=my-first-service
+  444  kubectl get svc
+   kubectl get pod -o wide

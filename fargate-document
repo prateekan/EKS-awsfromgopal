@@ -1,0 +1,19 @@
+###create the fargate profile
+
+ 463  kubectl create ns fp-dev
+  464  eksctl create fargateprofile --cluster eks-gopal --name fp-demo --namespace fp-dev
+
+  ###do git pull
+   469  cd k8s-manifest/
+
+   478  git pull
+  479  kubectl apply -f fp.yml
+ 
+  kubectl get pod -n fp-dev
+  kubectl get deploy -n fp-dev
+###delete the fargate profile
+ eksctl get fargateprofile --cluster eks-gopal
+ kubectl get deploy -n fp-demo
+eksctl delete fargateprofile --cluster eks-gopal --name fp-demo --wait
+###to verifyr
+ kubectl get deploy -n fp-dev

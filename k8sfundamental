@@ -1,0 +1,109 @@
+223  git clone https://gitlab.com/gopal1409/k8s-manifest.git
+  224  cd k8s-manifest/
+  225  kubectl apply -f pod.yaml
+227  kubectl get pod
+  228  kubectl describe pod nginx
+##3how to get the event log of nodes
+ 234  kubectl get nodes
+  236  kubectl describe node ip-192-168-31-149.ec2.internal
+###how to do dry run in k8s
+ 239  kubectl run nginx-dry --image nginx --dry-run=client -o yaml > drynginx.yaml
+  240  ls
+  241  cat drynginx.yaml
+  242  kubectl apply -f drynginx.yaml
+  243  kubectl get pod
+  244  kubectl edit pod nginx-dry
+###to close this edit press Esc :q!
+
+###delete the pod
+ 247  kubectl get pod
+  248  kubectl delete pod nginx
+  249  kubectl get pod
+##deployment
+224  cd k8s-manifest/
+ 252  git pull
+  253  kubectl apply -f deployment.yml
+  254  kubectl get deployment
+  255  kubectl get rs
+  256  kubectl get pod -o wide
+  ####label selector in deployment
+    260  kubectl get deploy
+  261  kubectl get rs
+  262  kubectl get pod
+  263  kubectl delete pod nginx-deployment-7fb96c846b-kncfr
+  264  kubectl get pod
+  265  kubectl get deploy
+  266  kubectl describe deploy nginx-deployment
+  267  kubectl get rs
+  268  kubectl describe rs nginx-deployment-7fb96c846b
+  269  kubectl describe pod nginx-deployment-7fb96c846b-kncfr
+
+  
+  
+  275  kubectl set image deployment nginx-deployment nginx=nginx:1.16.1
+  276  kubectl get deploy
+  277  kubectl get rs
+  278  kubectl describe deploy nginx-deployment
+  
+  282  kubectl set image deployment nginx-deployment nginx=nginx:1.161
+    284  kubectl rollout status deployments nginx-deployment
+  285  kubectl get rs
+  286  kubectl rollout history deployment nginx-deployment
+ 
+  288  kubectl rollout history deployment nginx-deployment --revision=2
+  289  kubectl rollout history deployment nginx-deployment --revision=1
+ 
+  292  kubectl rollout undo deployment nginx-deployment --to-revision=1
+
+###scaling
+ 299  kubectl get deploy
+  300  kubectl autoscale deployment nginx-deployment --min=2 --max=6 --cpu-percent=80
+  301  kubectl get hpa
+###create confimap and secret
+ 304  git pull
+  305  kubectl apply -f secret.yml
+  306  kubectl get secret
+  307  kubectl describe secret mysql-db-password
+    309  kubectl apply -f configmap.yml
+  310  kubectl get configmap
+  311  kubectl describe configmap usermgmt-config
+
+  ###change the storage class name
+  320  git pull
+  vi sc.yml
+  321  kubectl apply -f sc.yaml
+  322  kubectl get sc
+  ###map pvc with storage class
+  327  git pull
+  ####
+  vi pvc.yml 
+  ###modify the storage class name
+  328  kubectl apply -f pvc.yml
+  329  kubectl get pvc
+
+####mysql deployment
+336  git pull
+  337  kubectl apply -f mysql-deployment.yml
+  338  kubectl get deploy
+  #####then do get pvc will show the storage attache
+  339  kubectl get pvc
+  340  kubectl get sc
+  341  kubectl get deploy
+  342  kubectl get pod
+  343  kubectl exec -it mysql-deployment-796956d9cb-wxhds -- /bin/bash
+  ####we will loging to mysql db 
+  mysql -u root -p 
+  ####3put the password as dbpassword11
+show databases;
+###3it will show you the webappdb which confirm that configmap has been executed
+exit
+exit
+####delete the mysql
+345  kubectl get deploy
+  346  kubectl delete deploy mysql-deployment
+  347  kubectl get pvc
+  348  kubectl delete pvc ebs-mysql-pv-claim
+  349  kubectl get sc
+  350  kubectl delete sc ebs-sc-gopal
+
+

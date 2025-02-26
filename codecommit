@@ -1,0 +1,18 @@
+ls 
+upload code to code-commit
+661  cd /root
+  662  cd k8s-manifest/
+  663  git pull
+  664  ls
+  665  cd code/
+  666  ls
+  667  mv Dockerfile /root/eks-ecr-gopal/
+    669  mv buildspec.yml /root/eks-ecr-gopal/
+  670  mv app1 /root/eks-ecr-gopal/
+  671  mv kube-manifests /root/eks-ecr-gopal/
+  672  cd /root
+  673  cd eks-ecr-gopal/
+  674  ls
+  675  git add .
+  676  git commit -m "intializ"
+  677  git push origin master
